@@ -5,25 +5,6 @@
 <head>
   <link rel="stylesheet" href="style.css" />
   <title>Orbital Simulation</title>
-  <!-- Allows for LaTeX-->
-  <script>
-    MathJax = {
-        tex: {
-          inlineMath: [['$', '$']]
-          },
-
-        chtml: {
-            scale: .8
-        },
-        svg: {
-            scale: .8
-        }
-    };
-    
-};
-  </script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
   <body>
@@ -36,6 +17,8 @@
         <li><a href="#gallery">Gallery</a></li>
       </ul>
     </nav>
+
+    <p><em>Note: I will be updating this page continuously. Please bear with the changes.</em></p>
 
     <header><h1 class="title">Numerical Methods for Orbital Simulations</h1></header>
 
@@ -51,33 +34,30 @@
       
       <p>One of the simplest differential equations describing circular motion is 
         <br>
-        <math xmlns="http://www.w3.org/1998/Math/MathML" style="color:rgba(0,0,0,255);color:rgb(0,0,0);font-size:30.00pt;"><mstyle><mrow><mtable columnspacing="0.167em" columnalign="right center left" displaystyle="true"><mtr><mtd><mi>r</mi><mo>&#x2BA;</mo><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>=</mo><mo>-</mo><mi>r</mi></mtd></mtr></mtable></mrow></mstyle></math>
         <br><br>
         This may be written as a system of two equations:
         <br>
-        <math xmlns="http://www.w3.org/1998/Math/MathML" style="color:rgba(0,0,0,255);color:rgb(0,0,0);font-size:20.00pt;"><mstyle><mrow><mtable columnspacing="0.167em" columnalign="right center left" displaystyle="true"><mtr><mtd><mi>r</mi><mo>&#x2B9;</mo><mo>=</mo><mi>v</mi></mtd></mtr></mtable></mrow></mstyle></math>
         <br>
-        <math xmlns="http://www.w3.org/1998/Math/MathML" style="color:rgba(0,0,0,255);color:rgb(0,0,0);font-size:20.00pt;"><mstyle><mrow><mtable columnspacing="0.167em" columnalign="right center left" displaystyle="true"><mtr><mtd><mi>v</mi><mo>&#x2B9;</mo><mo>=</mo><mo>-</mo><mi>r</mi></mtd></mtr></mtable></mrow></mstyle></math>
         <br><br>
         Using Euler's method, we can derive formulas expressing <em>x</em>(<em>t</em> + <em>h</em>) and <em>v</em>(<em>t</em> + <em>h</em>) using <em>x</em>(<em>t</em>), <em>v</em>(<em>t</em>), and <em>h</em>, where <em>h</em> is the <strong>time step</strong>:
-        <math xmlns="http://www.w3.org/1998/Math/MathML" style="color:rgba(0,0,0,255);color:rgb(0,0,0);font-size:20.00pt;"><mstyle><mrow><mtable columnspacing="0.167em" columnalign="right center left" displaystyle="true"><mtr><mtd><mi>r</mi><mo maxsize="1">(</mo><mi>t</mi><mo>+</mo><mi>h</mi><mo maxsize="1">)</mo><mo>&#x2248;</mo><mi>r</mi><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>+</mo><mi>r</mi><mo>&#x2B9;</mo><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>&#xD7;</mo><mi>h</mi><mo>&#x2248;</mo><mi>r</mi><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>+</mo><mi>v</mi><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>&#xD7;</mo><mi>h</mi></mtd></mtr></mtable></mrow></mstyle></math>
         <br>
-        <math xmlns="http://www.w3.org/1998/Math/MathML" style="color:rgba(0,0,0,255);color:rgb(0,0,0);font-size:20.00pt;"><mstyle><mrow><mtable columnspacing="0.167em" columnalign="right center left" displaystyle="true"><mtr><mtd><mi>v</mi><mo maxsize="1">(</mo><mi>t</mi><mo>+</mo><mi>h</mi><mo maxsize="1">)</mo><mo>&#x2248;</mo><mi>v</mi><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>+</mo><mi>v</mi><mo>&#x2B9;</mo><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>&#xD7;</mo><mi>h</mi><mo>&#x2248;</mo><mi>v</mi><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>-</mo><mi>x</mi><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>&#xD7;</mo><mi>h</mi></mtd></mtr></mtable></mrow></mstyle></math>
         <br><br>
         If at time <em>t</em> = 0, we have <em>x</em>(0) and <em>v</em>(0) = 1, we can let <em>h</em> = 0.01, make 1000 time steps, and plot the plane portrait of the system. With a little intuition, we find the following satisfies the initial conditions:
         <br>
-        <math xmlns="http://www.w3.org/1998/Math/MathML" style="color:rgba(0,0,0,255);color:rgb(0,0,0);font-size:36.00pt;"><mstyle><mrow><mtable columnspacing="0.167em" columnalign="right center left" displaystyle="true"><mtr><mtd><mi>r</mi><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>=</mo><mrow><mi>sin</mi><mo maxsize="1">(</mo></mrow><mi>t</mi><mo maxsize="1">)</mo></mtd></mtr></mtable></mrow></mstyle></math>
         <br>
-        <math xmlns="http://www.w3.org/1998/Math/MathML" style="color:rgba(0,0,0,255);color:rgb(0,0,0);font-size:36.00pt;"><mstyle><mrow><mtable columnspacing="0.167em" columnalign="right center left" displaystyle="true"><mtr><mtd><mi>v</mi><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>=</mo><mrow><mi>cos</mi><mo maxsize="1">(</mo></mrow><mi>t</mi><mo maxsize="1">)</mo></mtd></mtr></mtable></mrow></mstyle></math>
         <br><br>
         We can now re-write the equations:
         <br>
-        <math xmlns="http://www.w3.org/1998/Math/MathML" style="color:rgba(0,0,0,255);color:rgb(0,0,0);font-size:36.00pt;"><mstyle><mrow><mtable columnspacing="0.167em" columnalign="right center left" displaystyle="true"><mtr><mtd><mi>r</mi><mo maxsize="1">(</mo><mi>t</mi><mo>+</mo><mi>h</mi><mo maxsize="1">)</mo><mo>&#x2248;</mo><mi>r</mi><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>+</mo><mi>r</mi><mo>&#x2B9;</mo><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>&#xD7;</mo><mi>h</mi><mo>&#x2248;</mo><mrow><mi>sin</mi><mo maxsize="1">(</mo></mrow><mi>t</mi><mo maxsize="1">)</mo><mo>+</mo><mrow><mi>cos</mi><mo maxsize="1">(</mo></mrow><mi>t</mi><mo maxsize="1">)</mo><mo>&#xD7;</mo><mi>h</mi></mtd></mtr></mtable></mrow></mstyle></math>
         <br>
-        <math xmlns="http://www.w3.org/1998/Math/MathML" style="color:rgba(0,0,0,255);color:rgb(0,0,0);font-size:36.00pt;"><mstyle><mrow><mtable columnspacing="0.167em" columnalign="right center left" displaystyle="true"><mtr><mtd><mi>v</mi><mo maxsize="1">(</mo><mi>t</mi><mo>+</mo><mi>h</mi><mo maxsize="1">)</mo><mo>&#x2248;</mo><mi>v</mi><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>+</mo><mi>v</mi><mo>&#x2B9;</mo><mo maxsize="1">(</mo><mi>t</mi><mo maxsize="1">)</mo><mo>&#xD7;</mo><mi>h</mi><mo>&#x2248;</mo><mrow><mi>cos</mi><mo maxsize="1">(</mo></mrow><mi>t</mi><mo maxsize="1">)</mo><mo>-</mo><mrow><mi>sin</mi><mo maxsize="1">(</mo></mrow><mi>t</mi><mo maxsize="1">)</mo><mo>&#xD7;</mo><mi>h</mi></mtd></mtr></mtable></mrow></mstyle></math>
     </p>
 
     <center><img src="./images/img1.png" width="550px"></center>
+      
+      <p>We first consider the forces present in our toy model, two-body system. We define our system as having constant mass and no external force present. Newton's law of universal gravitation defines the gravitational force between two spherical objects of mass <em>m</em><sub>1</sub> and <em>m</em><sub>2</sub> separated by distance <em>r</em> as
+        <br><br>
+        where <em>&gamma;</em> is the universal gravitational constant, approximately equal to <em>&gamma;</em> = 6.673 &#215; 10<sup>-11</sup> N m<sup>2</sup> kg<sup>-2</sup>. The unit vector <strong>r</strong>> originates from the center-of-mass of <em>m</em><sub>1</sub> towards the center-of-mass of <em>m</em><sub>2</sub>, and by definition may be rewritten as <em>r</em>/||<em>r</em>||. Doing so, our equation for the gravitational force becomes:
+        <br><br>
+      </p>
     
     </div>
 
