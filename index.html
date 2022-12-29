@@ -5,6 +5,20 @@
 <head>
   <link rel="stylesheet" href="style.css" />
   <title>Orbital Simulation</title>
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
 </head>
 
   <body>
@@ -18,10 +32,8 @@
       </ul>
     </nav>
 
-    <p><em>Note: I will be updating this page continuously. Please bear with the changes.</em></p>
-
     <header><h1 class="title">Numerical Methods for Orbital Simulations</h1></header>
-
+    <p><em>Note: This is a very rough draft. Please bear with the changes. :)</em></p>
     <div id="introduction">
       <h2>Introduction</h2>
 
@@ -32,33 +44,43 @@
     <div id="theory">
       <h2>Theory</h2>
       
-      <p>One of the simplest differential equations describing circular motion is 
-        <br>
-        <br><br>
-        This may be written as a system of two equations:
-        <br>
-        <br>
-        <br><br>
-        Using Euler's method, we can derive formulas expressing <em>x</em>(<em>t</em> + <em>h</em>) and <em>v</em>(<em>t</em> + <em>h</em>) using <em>x</em>(<em>t</em>), <em>v</em>(<em>t</em>), and <em>h</em>, where <em>h</em> is the <strong>time step</strong>:
-        <br>
-        <br><br>
-        If at time <em>t</em> = 0, we have <em>x</em>(0) and <em>v</em>(0) = 1, we can let <em>h</em> = 0.01, make 1000 time steps, and plot the plane portrait of the system. With a little intuition, we find the following satisfies the initial conditions:
-        <br>
-        <br>
-        <br><br>
-        We can now re-write the equations:
-        <br>
-        <br>
-    </p>
-
-    <center><img src="./images/img1.png" width="550px"></center>
-      
-      <p>We first consider the forces present in our toy model, two-body system. We define our system as having constant mass and no external force present. Newton's law of universal gravitation defines the gravitational force between two spherical objects of mass <em>m</em><sub>1</sub> and <em>m</em><sub>2</sub> separated by distance <em>r</em> as
-        <br><br>
-        where <em>&gamma;</em> is the universal gravitational constant, approximately equal to <em>&gamma;</em> = 6.673 &#215; 10<sup>-11</sup> N m<sup>2</sup> kg<sup>-2</sup>. The unit vector <strong>r</strong>> originates from the center-of-mass of <em>m</em><sub>1</sub> towards the center-of-mass of <em>m</em><sub>2</sub>, and by definition may be rewritten as <em>r</em>/||<em>r</em>||. Doing so, our equation for the gravitational force becomes:
-        <br><br>
-      </p>
-    
+      <p>One of the simplest differential equations describing circular motion is</p>
+      <center>$r''(t)=-r$</center>.
+      <p>This may be written as a system of two equations:</p>
+      <center>$r'=v$</center>
+      <br>
+      <center>$v'=-r$</center>
+      <p>Using Euler's method, we can derive formulas expressing <em>x</em>(<em>t</em> + <em>h</em>) and <em>v</em>(<em>t</em> + <em>h</em>) using <em>x</em>(<em>t</em>), <em>v</em>(<em>t</em>), and <em>h</em>, where <em>h</em> is the <strong>time step</strong>:</p>
+      <center>$r(t+h) \approx r(t)+r'(t) \times h \approx r(t)+v(t) \times h$</center>
+      <br>
+      <center>$v(t+h) \approx v(t)+v'(t) \times h \approx v(t)-x(t) \times h$</center>
+      <p>If at time <em>t</em> = 0, we have <em>x</em>(0) and <em>v</em>(0) = 1, we can let <em>h</em> = 0.01, make 1000 time steps, and plot the plane portrait of the system. With a little intuition, we find the following satisfies the initial conditions:</p>
+      <center>$r(t)=\sin(t)$</center>
+      <br>
+      <center>$v(t)=\cos(t)$</center>
+      <p>We can now re-write the equations:</p>
+      <center>$r(t+h) \approx r(t)+r'(t) \times h \approx \sin(t)+\cos(t) \times h$</center>
+      <br>
+      <center>$v(t+h) \approx v(t)+v'(t) \times h \approx \cos(t)-\sin(t) \times h$</center>
+      <br>
+      <center><img src="./images/img1.png" width="550px"></center>
+      <p>We first consider the forces present in our toy model, two-body system. We define our system as having constant mass and no external force present. Newton's law of universal gravitation defines the gravitational force between two spherical objects of mass <em>m</em><sub>1</sub> and <em>m</em><sub>2</sub> separated by distance <em>r</em> as</p>
+      <center>$\vec{F}=\frac{\gamma \, m_1 m_2}{r^2}\hat{r}$,</center>
+      <p>where <em>&gamma;</em> is the universal gravitational constant, approximately equal to <em>&gamma;</em> = 6.673 &#215; 10<sup>-11</sup> N m<sup>2</sup> kg<sup>-2</sup>. The unit vector <strong>r</strong> originates from the center-of-mass of <em>m</em><sub>1</sub> towards the center-of-mass of <em>m</em><sub>2</sub>, and by definition may be rewritten as <em>r</em> / ||<em>r</em>||. Doing so, our equation for the gravitational force becomes:</p>
+      <center>$\vec{F}=\frac{\gamma \, m_1 m_2}{r^3}\vec{r}_{12}$</center>
+      <p>Newton's second law states that a force acting on a point of mass will lead to a change in momentum per unit time:</p>
+      <center>$\vec{F}_{21}=m_{1}\frac{d^2r_{1}}{dt^2}$</center>
+      <p>We can set the above two equations equal to get</p>
+      <center>$m_{1}\frac{d^2r_{1}}{dt^2}=\frac{\gamma m_1 m_2}{r^3}\vec{r}_{12}$</center>
+      <p>which may be reduced to a pair of coupled first-order ordinary differential equations:</p>
+      <center>$m_1\frac{dv}{dt}=\frac{\gamma m_1 m_2}{r^3}\vec{r}_{12}$</center>
+      <br>
+      <center>$\frac{dr}{dt}=\vec{v}$</center>
+      <p>Dividing both sides of the above by $m_{1}$, we receive the following expression for the acceleration of object 1:</p>
+      <center>$\frac{d^2r_{1}}{dt^2} = \frac{\gamma m_2}{r^3}\vec{r}_{12}$</center>
+      <p>Additionally, we can write the acceleration of object 2 as:</p>
+      <center>$\frac{d^2r_{2}}{dt^2} = \frac{\gamma m_1}{r^3}\vec{r}_{21}$</center>
+      <p>We then translate Equations 7 and 8 into the functions \lstinline{accel_obj1()} and \lstinline{accel_obj2()}, respectively:</p>
     </div>
 
     <div id="code">
