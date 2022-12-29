@@ -70,3 +70,11 @@ strong {
 	font-style: bold;
 	font-family: 'Times New Roman', Times, serif;
 }
+
+sub {
+	font-family: 'Times New Roman', Times, serif;
+}
+
+sup {
+	font-family: 'Times New Roman', Times, serif;
+}
