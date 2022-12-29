@@ -3,29 +3,36 @@ nav ul {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-	background-color: #8B6969;
+	background-color: #a69cac;
 	display: table;
 	width: 100%;
 }
 
 nav li {
-	display: table-cell
+	display: table-cell;
 }
 
 li a {
 	display: block;
-	color: white;
+	color: #000;
 	text-align: center;
 	padding: 15px 15px;
 	text-decoration: none;
 }
 
 li a:hover {
-	background-color: #6F4242;
+	background-color: #474973;
+	color: #fbf1f3;
 }
 
-.title, h2, h3 {
+.title {
 	text-align: center;
+	color: #161b33;
+}
+
+h2, h3 {
+	text-align: center;
+	color: #474973;
 }
 
 * {
@@ -33,25 +40,33 @@ li a:hover {
 }
 
 body {
-	background-color: #EEE9E9;
+	background-color: #f1eeeb;
 }
 
 p {
-	max-width: 900px;
+	max-width: 750px;
 	margin: auto;
 	padding: 15px;
 	text-align: justify;
 	font-family: 'Times New Roman', Times, serif;
+	color:#0d0c1d;
 }
 
 footer {
 	text-align: center;
-	background-color: #8B6969;
+	background-color: #a69cac;
 	padding: 15px;
-	color:#EEE9E9
+	color:#000;
+	font-family: 'Times New Roman', Times, serif;
 }
 
 em {
 	font-style: italic;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+strong {
+
+	font-style: bold;
 	font-family: 'Times New Roman', Times, serif;
 }
