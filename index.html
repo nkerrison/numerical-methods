@@ -3,9 +3,14 @@
 <html>
   
 <head>
+
+  <!-- link to CSS file -->
   <link rel="stylesheet" href="style.css" />
+  
+  <!-- seen on tab -->
   <title>Orbital Simulation</title>
 
+  <!-- MathJax, used to display LaTeX equations -->
   <script>
     MathJax = {
       tex: {
@@ -19,25 +24,28 @@
     <script type="text/javascript" id="MathJax-script" async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
     </script>
+
 </head>
 
   <body>
 
-    <nav>
+    <header>
+      <nav>
       <ul>
         <li><a href="#introduction">Introduction</a></li>
         <li><a href="#theory">Theory</a></li>
-        <li><a href="#code">Code</a></li>
+        <li><a href="#numerical-methods">Numerical Methods</a></li>
         <li><a href="#gallery">Gallery</a></li>
       </ul>
     </nav>
+  </header>
 
-    <header><h1 class="title">Numerical Methods for Orbital Simulations</h1></header>
+    <h1 class="title">Numerical Methods for Orbital Simulations</h1>
     <p><em>Note: This is a very rough draft. Please bear with the changes. :)</em></p>
     <div id="introduction">
       <h2>Introduction</h2>
 
-      <p>Numerical methods are algorithms designed to approximate solutions to numerical problems. The following webpage will someday illustrate the differences between four of these methods, namely the <strong>Euler</strong>, <strong>Euler-Cromer</strong>, <strong>Runge-Kutta</strong>, and <strong>Adams–Bashforth</strong> methods.</p>
+      <p>Numerical methods are algorithms designed to approximate solutions to numerical problems. The following webpage will someday illustrate the differences between N such methods, namely the <strong>Euler</strong>, <strong>Euler-Cromer</strong>, <strong>Runge-Kutta</strong>, and <strong>Adams–Bashforth</strong> methods.</p>
     
     </div>
     
@@ -80,12 +88,62 @@
       <center>$\frac{d^2r_{1}}{dt^2} = \frac{\gamma m_2}{r^3}\vec{r}_{12}$</center>
       <p>Additionally, we can write the acceleration of object 2 as:</p>
       <center>$\frac{d^2r_{2}}{dt^2} = \frac{\gamma m_1}{r^3}\vec{r}_{21}$</center>
-      <p>We then translate Equations 7 and 8 into the functions \lstinline{accel_obj1()} and \lstinline{accel_obj2()}, respectively:</p>
+      <p>We then translate Equations 7 and 8 into the functions <strong><code>accel_obj1()</code></strong> and <strong><code>accel_obj2</code></strong>, respectively:</p>
+      <div class="code">
+        <strong>def</strong> accel_obj1(r1, r2):<br>
+        &emsp;r = r2 - r1<br>
+        &emsp;norm_r = np.linalg.norm(r)<br>
+        &emsp;accel1 = G * m2 * r / norm_r**3<br>
+        &emsp;<strong>return</strong> accel1
+        <br><br>
+        <strong>def</strong> accel_obj2(r1, r2):<br>
+        &emsp;r = r1 - r2<br>
+        &emsp;norm_r = np.linalg.norm(r)<br>
+        &emsp;accel2 = G * m1 * r / norm_r**3<br>
+        &emsp;<strong>return</strong> accel2<br>
+      </div>
+      <h3>Energy</h3>
+      <p>The total energy of a two-body system equals the sum of object 1's kinetic energy $(T_{1})$, object 2's kinetic energy $(T_{2})$, and the potential energy $(U)$ of the system:</p>
+      <center>$E_{\text{tot}} = T_{1} +T_{2} + U$</center>
+      <p>Both kinetic and potential energy may be represented as a function of time:</p>
+      <center>$T(t)=\frac{1}{2}\sum_{k=1}^N m_{k}v_{k}(t)^2$</center><br>
+      <center>$U(t)=-\gamma \sum_{k < n} \frac{m_{k}m_{n}}{|r_{k}(t)-r_{n}(t)|}$</center>
+      <p>We create the function <strong><code>energy()</code></strong> for a more explicit view of how each numerical method influences the behavior of a system's total energy over time: </p>
+      <div class="code">
+        <strong>def</strong> energy(v1,v2,r1,r2):<br>
+        &emsp;<strong>for</strong> t <strong>in range</strong>(0, t_range):<br>
+          &emsp;&emsp;T1[t] = 0.5 * m1 * np.linalg.norm(v1[t])**2<br>
+          &emsp;&emsp;T2[t] = 0.5 * m2 * np.linalg.norm(v2[t])**2<br>
+          &emsp;&emsp;U[t]  = G * m1 * m2 / np.linalg.norm(r1[t] - r2[t])<br>
+          &emsp;&emsp;Etot[t] = T1[t] + T2[t] - U[t]
+      </div>
     </div>
 
-    <div id="code">
-      <h2>Code</h2>
-      <p>Python code will go here.</p>
+    <div id="numerical-methods">
+      <h2>Numerical Methods</h2>
+      <h3>The Euler Method</h3>
+      <p>Given an initial condition, Euler's method may be used to obtain a numerical solution to first-order differential equations. The method states that the value of a differentiable function at $t+\delta{t}$ may be approximated as $f(t+\delta{t}) \approx f(t)+f'(t)\times\delta{t}$, where $\delta{t}$ is called the ``time step.'' Note: Euler's Method is simply the first two terms of a Taylor Series.</p>
+      <center>$f(t+\delta{t}) \approx f(t)+f'(t)\times\delta{t}+\frac{f''(t)\times \delta{t}^2}{2!}+\frac{f'''(t)\times\delta{t}^3}{3!}+\ldots$</center>
+      <p>We derive formulas for the position $r_{k}(t+\delta{t})$ and momentum $m_{k}v_{k}(t+\delta{t})$ at each time step as follows:</p>
+      <center>$r_{k}(t+\delta{t}) \approx r_{k}(t)+v_{k}(t)\times\delta{t}$</center><br>
+      <center>$m_{k}v_{k}(t+\delta{t}) \approx m_{k}v_{k}(t)+F_{k}(t)\times\delta{t}$</center>
+      <p>For the purpose of our code, we rewrite $\textnormal{Eq.}\,(11)$ as:</p>
+      <center>$v_{k}(t+\delta{t}) \approx v_{k}(t)+\frac{F_{k}(t)}{m_{k}}\times\delta{t} \approx v_{k}(t)+a_{k}(t)\times\delta{t}$</center>
+      <p>These functions are directly used in our code. $\textnormal{Eqs.}\,(14)$ and $(12)$ are translated to Python as <strong><code>v_obj1[t+1]</code></strong> and <strong><code>r_obj1[t+1]</code></strong>, respectively.</p>
+      <p>Since the Euler method is highly susceptible to error, computations should utilize small time steps over a large number of iterations for the highest accuracy. To illustrate, we gradually decrease the time step and increase the number of iterations in our algorithm. We begin with t = 1000 and dt = 0.01; the two bodies are initially attracted to each other, only to both be rapidly ejected from the system.</p>
+      <p>Even decreasing the time step by $10\%$ for a step size value of $dt=0.001$ gives us a much different picture:</p>
+      <p>When we decrease the time step by $100\%$ and increase the number of iterations by $500\%$, it becomes clear that energy is not being conserved.</p>
+      <p>The orbits may be "tightened" by continuing to increase the number of iterations and decrease the size of each time step. At this point, any further fine-tuning may result in a non-trivial rise in processing time. It becomes clear that this method is computationally expensive and impractical for use in modeling.</p>
+      <h3>The Euler-Cromer Method</h3>
+      <p>The Euler-Cromer (or predictor-corrector) method mitigates the spiraling seen in the previous section with a small change. The \lstinline{for}-loop used in the Euler method is altered so that</p>
+      <div class="code">r_obj1[t+1] = r_obj1[t] + h * v_obj1[t]</div>
+      <p>becomes</p>
+      <div class="code">r_obj1[t+1] = r_obj1[t] + h * v_obj1[t+1]</div>
+      <p>and</p>
+      <div class="code">r_obj2[t+1] = r_obj2[t] + h * v_obj2[t]</div>
+      <p>becomes</p>
+      <div class="code">r_obj2[t+1] = r_obj2[t] + h * v_obj2[t+1]</div>
+      <p>While this change may seem trivial, the result is a markedly more efficient program with higher accuracy.</p>
     </div>
     
     <div id="gallery">
