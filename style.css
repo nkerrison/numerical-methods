@@ -66,15 +66,35 @@ em {
 }
 
 strong {
-
 	font-style: bold;
 	font-family: 'Times New Roman', Times, serif;
 }
 
+/* subscripts */
 sub {
 	font-family: 'Times New Roman', Times, serif;
 }
 
+/* superscripts */
 sup {
 	font-family: 'Times New Roman', Times, serif;
+}
+
+/* class selector */
+.code {
+	font-family: 'Courier New', Courier, monospace;
+	max-width: 750px;
+	margin: auto;
+}
+
+/* affects only the strong elements in the code ID selector */
+.code strong {
+	font-style: bold;
+	font-family: 'Courier New', Courier, monospace;
+	color: #D35410;
+}
+
+code {
+	font-family:'Courier New', Courier, monospace;
+	color:rgb(42, 42, 207);
 }
