@@ -21,6 +21,8 @@
 
 ## About The Project
 
+This project is meant to be viewed on GitHub Pages. Click <a href="https://nkerrison.github.io/numerical-methods/" target="_blank">here</a> to view.
+
 ### Built With
 [HTML5](https://html.spec.whatwg.org) – [Python 3](https://python.org)
 
